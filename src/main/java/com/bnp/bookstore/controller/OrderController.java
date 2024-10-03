@@ -28,7 +28,7 @@ public class OrderController {
         return ResponseEntity.ok(cartOrders);
     }
 
-    @GetMapping("/cancel/{order_number}")
+    @DeleteMapping("/cancel/{order_number}")
     public ResponseEntity<String> cancelOrderForUser(@RequestParam String username,
                                                      @PathVariable("order_number") Long orderNumber) {
         orderService.cancelOrderForUser(username, orderNumber);

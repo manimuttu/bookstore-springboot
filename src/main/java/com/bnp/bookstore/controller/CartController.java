@@ -24,7 +24,7 @@ public class CartController {
     @Autowired
     private AppUserService appUserService;
 
-    @PostMapping("/items")
+    @GetMapping("/items")
     public ResponseEntity<CartDTO> getCartDetails(@RequestParam String username){
         CartDTO cart = cartService.getCartForUser(username);
         return ResponseEntity.ok(cart);
