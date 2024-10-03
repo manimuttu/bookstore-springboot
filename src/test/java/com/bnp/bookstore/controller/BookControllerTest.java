@@ -16,6 +16,8 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookController.class)
@@ -64,5 +66,32 @@ public class BookControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(books)))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void getAllBooks_shouldReturnListOfBooks_whenBooksExist() throws Exception {
+        // Arrange
+        Book book1 = new Book();
+        book1.setAuthor("Author1");
+        book1.setIsbn("AS1234");
+        book1.setPrice(200.00);
+        book1.setStock(20);
+        book1.setTitle("Book1 Title");
+
+        Book book2 = new Book();
+        book2.setAuthor("Author2");
+        book2.setIsbn("BS1234");
+        book2.setPrice(500.00);
+        book2.setStock(40);
+        book2.setTitle("Book2 Title");
+
+        List<Book> books = List.of(book1, book2);
+        when(bookService.listAllBooks()).thenReturn(books);
+
+        // Act & Assert
+        mockMvc.perform(get("/bookstore/books/list"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Book1 Title"))
+                .andExpect(jsonPath("$[1].title").value("Book2 Title"));
     }
 }

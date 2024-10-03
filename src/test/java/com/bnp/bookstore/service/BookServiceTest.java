@@ -34,4 +34,17 @@ public class BookServiceTest {
         assertEquals(2, addedBooks.size());
         verify(bookRepository, times(1)).saveAll(books);
     }
+
+    @Test
+    public void shouldReturnAllBooks_whenGetAllBooksIsCalled() {
+        Book book1 = mock(Book.class);
+        Book book2 = mock(Book.class);
+        List<Book> books = List.of(book1, book2);
+
+        when(bookRepository.findAll()).thenReturn(books);
+        List<Book> listedBooks = bookService.listAllBooks();
+
+        assertEquals(2, listedBooks.size());
+        verify(bookRepository, times(1)).findAll();
+    }
 }
