@@ -2,6 +2,8 @@ package com.bnp.bookstore.service;
 
 import com.bnp.bookstore.dto.CartDTO;
 import com.bnp.bookstore.dto.CartItemRequestDTO;
+import com.bnp.bookstore.exception.BookNotFoundException;
+import com.bnp.bookstore.exception.UserNotFoundException;
 import com.bnp.bookstore.mapper.CartMapper;
 import com.bnp.bookstore.model.AppUser;
 import com.bnp.bookstore.model.Book;
@@ -34,7 +36,8 @@ public class CartService {
     private AppUserService appUserService;
 
     public CartDTO addOrUpdateBooksCart(List<CartItemRequestDTO> requestDTOs, String username) {
-        AppUser appUser = appUserService.findByUsername(username).orElseThrow();
+        AppUser appUser = appUserService.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
 
         Cart cart = cartRepository.findByAppUser(appUser).map(existingCart -> {
             existingCart.getCartItems().clear();
@@ -47,10 +50,10 @@ public class CartService {
 
         for (CartItemRequestDTO itemDto : requestDTOs) {
             Book book = bookService.findByIsbn(itemDto.getBookId())
-                    .orElseThrow(() -> new RuntimeException("Book not found for ISBN: " + itemDto.getBookId()));
+                    .orElseThrow(() -> new BookNotFoundException("Book not found for ISBN: " + itemDto.getBookId()));
 
             if (book.getStock() < itemDto.getQuantity()) {
-                throw new IllegalArgumentException("Book with ISBN " + itemDto.getBookId() +
+                throw new BookNotFoundException("Book with ISBN " + itemDto.getBookId() +
                         " has insufficient stock. Stock available: " + book.getStock());
             }
 
@@ -67,7 +70,8 @@ public class CartService {
     }
 
     public CartDTO getCartForUser(String username) {
-        AppUser user = appUserService.findByUsername(username).orElseThrow();
+        AppUser user = appUserService.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
         Cart savedCart = cartRepository.findByAppUser(user).orElseGet(() -> {
             Cart cart = new Cart();
             cart.setAppUser(user);
