@@ -31,7 +31,7 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CartDTO> handleBooksCart(@RequestBody List<CartItemRequestDTO> items, @RequestParam String username){
+    public ResponseEntity<CartDTO> addOrUpdateBooksCart(@RequestBody List<CartItemRequestDTO> items, @RequestParam String username){
         CartDTO cart = cartService.addOrUpdateBooksCart(items,username);
         return ResponseEntity.ok(cart);
     }
