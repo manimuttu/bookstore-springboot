@@ -70,7 +70,6 @@ public class BookControllerTest {
 
     @Test
     void getAllBooks_shouldReturnListOfBooks_whenBooksExist() throws Exception {
-        // Arrange
         Book book1 = new Book();
         book1.setAuthor("Author1");
         book1.setIsbn("AS1234");
@@ -88,7 +87,6 @@ public class BookControllerTest {
         List<Book> books = List.of(book1, book2);
         when(bookService.listAllBooks()).thenReturn(books);
 
-        // Act & Assert
         mockMvc.perform(get("/bookstore/books/list"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Book1 Title"))
