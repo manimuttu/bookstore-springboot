@@ -23,7 +23,7 @@ public class BookServiceTest {
     private BookService bookService;
 
     @Test
-    public void testAddBooks() {
+    public void shouldAddAllBooks_whenAddBooksIsCalled() {
         Book book1 = mock(Book.class);
         Book book2 = mock(Book.class);
         List<Book> books = List.of(book1, book2);

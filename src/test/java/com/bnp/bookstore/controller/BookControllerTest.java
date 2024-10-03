@@ -36,7 +36,7 @@ public class BookControllerTest {
     ObjectMapper objectMapper;
 
     @Test
-    public void testAddBooks() throws Exception {
+    public void shouldAddAllBooks_whenAddBooksIsCalled() throws Exception {
         Book book1 = mock(Book.class);
         Book book2 = mock(Book.class);
         List<Book> books = List.of(book1, book2);
@@ -50,7 +50,7 @@ public class BookControllerTest {
     }
 
     @Test
-    public void testAddBooksService() throws Exception {
+    public void shouldAddBook_whenAddBooksIsCalled() throws Exception {
         Book book1 = new Book();
         book1.setAuthor("Author");
         book1.setIsbn("AS1234");
