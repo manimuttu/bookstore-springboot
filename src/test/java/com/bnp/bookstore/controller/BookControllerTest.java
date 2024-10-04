@@ -4,36 +4,45 @@ import com.bnp.bookstore.model.Book;
 import com.bnp.bookstore.repository.BookRepository;
 import com.bnp.bookstore.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BookController.class)
 public class BookControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
+    @Mock
+    private BookService bookService;
 
-    @MockBean
-    BookService bookService;
-
-    @MockBean
+    @Mock
     private BookRepository bookRepository;
 
-    @Autowired
-    ObjectMapper objectMapper;
+    @InjectMocks
+    private BookController bookController;
+
+    private MockMvc mockMvc;
+
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
+        objectMapper = new ObjectMapper();
+    }
 
     @Test
     public void shouldAddAllBooks_whenAddBooksIsCalled() throws Exception {
