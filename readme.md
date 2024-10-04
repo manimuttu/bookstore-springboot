@@ -62,14 +62,49 @@ To run the unit tests:
 mvn test
 ```
 
+### Steps to test the APIs
+
+- `1. Register yourself with username and password`  
+   This will register you.
+
+
+- `2. Login with the registered username and password`  
+   Auth: Basic Auth
+   
+   This will takes credentials and generate **jwt** token for subsequent calls.
+
+
+- `3. List all the books`  
+  Auth: Bearer Token
+  Lists books.
+
+
+- `4. Add Books to the cart`  
+  Auth: Bearer Token
+  Add books to cart.
+
+
+- `5. Checkout/Order from cart`
+  Auth: Bearer Token
+  Checkout the cart.
+
+
+- `6. Cancel order`  
+  Auth: Bearer Token
+  This will cancel the order.
+ 
 ### Available APIs
 
 Here are the available APIs along with their request details and sample responses.
+As Authentication and Authorization has been added very last momement,
+We are taking username manually in all the endpoints.
+This will be integrated with Authenticated user very soon.
 
 #### 1. Register User
 
 **Endpoint:** `/bookstore/user/register`  
 **Method:** `POST`  
+**Authorization:** None   
 **Request Body:**
 
 ```json
@@ -84,11 +119,26 @@ Response code: 201 Created
 User registered
 ```
 
+#### 2. Login User
+
+**Endpoint:** `/bookstore/user/login`  
+**Method:** `GET`  
+**Authorization:** Basic Ym9iOnNlY3JldA==   
+**Request Body:** None  
+
+**Sample Response:**    
+Response code: 201 Created
+```
+User registered
+```
+
 
 #### 2. Add Books To The Database
 
 **Endpoint:** `/bookstore/books/add`  
 **Method:** `POST`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA     
+
 **Request Body:**
 
 ```json
@@ -117,6 +167,8 @@ Response code: 201 Created
 
 **Endpoint:** `/bookstore/books/list`  
 **Method:** `GET`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA
+
 **Request Body:** None
 
 **Sample Response:**    
@@ -148,6 +200,8 @@ Response code: 200 OK
 - `username`: The username of the user, To whose cart books are to be added.
 
 **Method:** `POST`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA
+
 **Request Body:** 
 ```json
 [
@@ -190,6 +244,8 @@ Response code: 200 OK
 - `username`: The username of the user, whose cart items to list.
 
 **Method:** `GET`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA
+
 **Request Body:** None
 
 **Sample Response:**    
@@ -222,6 +278,8 @@ Response code: 200 OK
 - `username`: The username of the user, making checkout.
 
 **Method:** `POST`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA
+
 **Request Body:** None
 
 **Sample Response:**    
@@ -255,6 +313,8 @@ Response code: 200 OK
 - `username`: The username of the user requesting the orders.
 
 **Method:** `GET`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA
+
 **Request Body:** None
 
 **Sample Response:**    
@@ -289,6 +349,8 @@ Response code: 200 OK
 - `order_number`: The Order number that needs to be cancelled.
 
 **Method:** `DELETE`  
+**Authorization:** Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IiLCJpYXQiOjE3MjgwNDc0OTMsImV4cCI6MTczNTk5NjI5M30.x6bjbMz4OHY3QBdilT0z2vnWKI62dE4Y5zpBjj69sTA
+
 **Request Body:** None
 
 **Sample Response:**    
