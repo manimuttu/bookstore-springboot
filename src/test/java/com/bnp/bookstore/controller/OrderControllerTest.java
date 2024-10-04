@@ -41,7 +41,6 @@ public class OrderControllerTest {
 
     @Test
     public void createOrder_ValidOrder_ReturnsOrderDTO() throws Exception {
-        // Given
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderNumber(1L);
         orderDTO.setTotalAmount(100.0);
@@ -49,7 +48,6 @@ public class OrderControllerTest {
 
         when(orderService.createOrder("testuser")).thenReturn(orderDTO);
 
-        // When & Then
         mockMvc.perform(post("/bookstore/orders/checkout?username=testuser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(orderDTO)))
@@ -61,7 +59,6 @@ public class OrderControllerTest {
 
     @Test
     public void listOrders_UserHasOrders_ReturnsOrderList() throws Exception {
-        // Given
         OrderDTO orderDTO1 = new OrderDTO();
         orderDTO1.setOrderNumber(1L);
         orderDTO1.setTotalAmount(100.0);
@@ -74,7 +71,6 @@ public class OrderControllerTest {
 
         when(orderService.getOrdersForUser("testuser")).thenReturn(List.of(orderDTO1, orderDTO2));
 
-        // When & Then
         mockMvc.perform(get("/bookstore/orders/userOrders?username=testuser"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].orderNumber").value(1L))

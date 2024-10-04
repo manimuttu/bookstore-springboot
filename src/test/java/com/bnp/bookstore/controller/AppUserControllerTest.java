@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AppUserControllerTest {
 
+    public static final String BOOKSTORE_USER_REGISTER_URL = "/bookstore/user/register";
     @Mock
     private AppUserService appUserService;
 
@@ -39,13 +40,73 @@ public class AppUserControllerTest {
 
     @Test
     public void registerUser_Success() throws Exception {
-        AppUser user = new AppUser("testuser", "password123");
+        AppUserRequestDTO user = new AppUserRequestDTO("testuser", "password123");
+        AppUser appUser = new AppUser("testuser", "password123");
 
-        when(appUserService.registerUser(any(AppUserRequestDTO.class))).thenReturn(user);
+        when(appUserService.registerUser(any(AppUserRequestDTO.class))).thenReturn(appUser);
 
-        mockMvc.perform(post("/bookstore/user/register")
+        mockMvc.perform(post(BOOKSTORE_USER_REGISTER_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void register_emptyUsername_badRequest() throws Exception {
+        AppUserRequestDTO authRequest = new AppUserRequestDTO();
+        authRequest.setUsername("");
+        authRequest.setPassword("password");
+
+        mockMvc.perform(post(BOOKSTORE_USER_REGISTER_URL)
+                        .flashAttr("currentUsername", authRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(authRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void register_emptyPassword_badRequest() throws Exception {
+        AppUserRequestDTO authRequest = new AppUserRequestDTO();
+        authRequest.setUsername("user");
+        authRequest.setPassword("");
+
+        mockMvc.perform(post(BOOKSTORE_USER_REGISTER_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .flashAttr("currentUsername", authRequest)
+                        .content(new ObjectMapper().writeValueAsString(authRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void register_usernameWithSpecialChars_badRequest() throws Exception {
+        String username = "user@domain.com";
+        String password = "password";
+
+        AppUserRequestDTO authRequest = new AppUserRequestDTO();
+        authRequest.setUsername(username);
+        authRequest.setPassword(password);
+
+        mockMvc.perform(post(BOOKSTORE_USER_REGISTER_URL)
+                        .flashAttr("currentUsername", authRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(authRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void register_usernameTooLong_badRequest() throws Exception {
+        String username = "user".repeat(100);
+        String password = "password";
+
+        AppUserRequestDTO authRequest = new AppUserRequestDTO();
+        authRequest.setUsername(username);
+        authRequest.setPassword(password);
+
+        mockMvc.perform(post(BOOKSTORE_USER_REGISTER_URL)
+                        .flashAttr("currentUsername", authRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(authRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
 }

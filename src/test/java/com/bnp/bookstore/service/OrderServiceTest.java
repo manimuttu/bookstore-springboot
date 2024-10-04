@@ -38,7 +38,6 @@ public class OrderServiceTest {
 
     @Test
     public void createOrder_ValidOrder_ReturnsOrderDTO() {
-        // Given
         CartOrder order = new CartOrder();
         order.setOrderNumber(1L);
         order.setTotalAmount(100.0);
