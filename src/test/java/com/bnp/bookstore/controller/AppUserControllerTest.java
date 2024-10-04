@@ -44,22 +44,8 @@ public class AppUserControllerTest {
         when(appUserService.registerUser(any(AppUserRequestDTO.class))).thenReturn(user);
 
         mockMvc.perform(post("/bookstore/user/register")
-//                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isOk());
     }
-
-//    @Test
-//    public void registerUser_Success() throws Exception {
-//        AppUser user = new AppUser("testuser", "password123");
-//
-//        when(appUserService.registerUser(any(AppUserRequestDTO.class))).thenReturn(user);
-//
-//        mockMvc.perform(post("/bookstore/user/register")
-////                        .with(csrf())
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(user)))
-//                .andExpect(status().isOk());
-//    }
 }
