@@ -109,7 +109,7 @@ This will be integrated with Authenticated user very soon.
 
 ```json
 {
-    "username": "ganesh",
+    "username": "bob",
     "password": "secret"
 }
 ```
