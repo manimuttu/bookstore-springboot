@@ -2,7 +2,6 @@
 INSERT INTO app_user (username, password) VALUES ('john_doe', 'password1');
 INSERT INTO app_user (username, password) VALUES ('jane_doe', 'password2');
 INSERT INTO app_user (username, password) VALUES ('alice', 'password3');
-INSERT INTO app_user (username, password) VALUES ('bob', 'password4');
 
 -- Inserting sample data into Book table
 INSERT INTO book (isbn, title, author, price, stock) VALUES ('978-0134685991', 'Effective Java', 'Joshua Bloch', 45.00, 10);

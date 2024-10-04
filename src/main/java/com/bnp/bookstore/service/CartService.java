@@ -12,12 +12,14 @@ import com.bnp.bookstore.model.CartItem;
 import com.bnp.bookstore.repository.BookRepository;
 import com.bnp.bookstore.repository.CartItemRepository;
 import com.bnp.bookstore.repository.CartRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class CartService {
 
     @Autowired
@@ -36,6 +38,7 @@ public class CartService {
     private AppUserService appUserService;
 
     public CartDTO addOrUpdateBooksCart(List<CartItemRequestDTO> requestDTOs, String username) {
+        log.info("User not found for username 41 :"+ username);
         AppUser appUser = appUserService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
 
@@ -70,6 +73,7 @@ public class CartService {
     }
 
     public CartDTO getCartForUser(String username) {
+        log.info("User not found for username 76 :"+ username);
         AppUser user = appUserService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
         Cart savedCart = cartRepository.findByAppUser(user).orElseGet(() -> {

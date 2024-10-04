@@ -80,12 +80,8 @@ Here are the available APIs along with their request details and sample response
 ```
 **Sample Response:**    
 Response code: 201 Created
-```json
-{
-  "id": 5,
-  "username": "ganesh",
-  "password": "secret"
-}
+```
+User registered
 ```
 
 
