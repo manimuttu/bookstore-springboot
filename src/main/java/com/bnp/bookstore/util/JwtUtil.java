@@ -25,7 +25,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    private static Key key(){
+    static Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET));
     }
 
@@ -43,7 +43,7 @@ public class JwtUtil {
         return extractedUsername.equals(username) && !isTokenExpired(token);
     }
 
-    private static boolean isTokenExpired(String token) {
+    static boolean isTokenExpired(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key())
                 .build()

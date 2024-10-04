@@ -23,7 +23,6 @@ public class LoginUserDetailsService implements UserDetailsService {
     private AppUserRepository appUserRepository;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("User not found for username 24 :"+ username);
         AppUser appUser = appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
 

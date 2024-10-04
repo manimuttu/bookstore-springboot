@@ -38,7 +38,6 @@ public class CartService {
     private AppUserService appUserService;
 
     public CartDTO addOrUpdateBooksCart(List<CartItemRequestDTO> requestDTOs, String username) {
-        log.info("User not found for username 41 :"+ username);
         AppUser appUser = appUserService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
 
@@ -73,7 +72,6 @@ public class CartService {
     }
 
     public CartDTO getCartForUser(String username) {
-        log.info("User not found for username 76 :"+ username);
         AppUser user = appUserService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found for username:"+ username));
         Cart savedCart = cartRepository.findByAppUser(user).orElseGet(() -> {

@@ -18,10 +18,8 @@ public class CustomExceptionHandlingFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (AuthenticationException ex) {
-            // Handle authentication exception
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Bad111 credentials");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Bad credentials");
         } catch (Exception ex) {
-            // Handle any other exceptions
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An unexpected error occurred");
         }
     }

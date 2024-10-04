@@ -24,6 +24,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        new ObjectMapper().writeValue(response.getOutputStream(), "Bad2222 credentials");
+        new ObjectMapper().writeValue(response.getOutputStream(), "Bad credentials");
     }
 }
