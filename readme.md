@@ -40,6 +40,22 @@ mvn spring-boot:run
 4. The application will be available at http://localhost:8080
 
 
+### Swagger
+Access swagger from below link
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+### H2 link
+Access H2 in-memory database from below url     
+
+username:sa     
+password:password
+```
+http://localhost:8080/h2-console/
+```
+
+
 ### Running Tests
 To run the unit tests:
 ```
